@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/skeleton.css}">
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
+</head>
+<body>
+<div class="container">
+    <div class="row" style="margin-top: 5%">
+        <h1>Sign up</h1>
+        <hr>
+        <form>
+            <div class="row">
+                <div class="six columns">
+                    <label for="login_name">Your name</label>
+                    <input class="u-full-width" required type="text" placeholder="test" id="login_name">
+                </div>
+                <div class="six columns">
+                    <label for="login_email">Your email</label>
+                    <input class="u-full-width" required type="email" placeholder="test@mailbox.com" id="login_email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label for="login_login">Your login</label>
+                    <input class="u-full-width" required type="text" placeholder="login" id="login_login">
+                </div>
+                <div class="six columns">
+                    <label for="login_phone_number">Your phone number</label>
+                    <input class="u-full-width" required type="text" placeholder="7700-000-00-00" id="login_phone_number">
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label for="login_pass">Your password</label>
+                    <input class="u-full-width" required type="password" placeholder="password" id="login_pass">
+                </div>
+                <div class="six columns">
+                    <label for="login_pass2">Your password again</label>
+                    <input class="u-full-width" required type="password" placeholder="repeat password " id="login_pass2">
+                </div>
+            </div>
+
+            <div class="row">
+                <input class="button-primary" type="submit" value="SIGN IN">
+                <a class="button" href="/main">GO BACK TO MAIN PAGE</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+</body>
+</html>

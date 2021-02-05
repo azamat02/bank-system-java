@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bank system</title>
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/skeleton.css}">
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
+
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="row" style="margin-top: 20px;">
+                <navbar>
+                    <div class="five columns">
+                        <h1>Bank system</h1>
+                    </div>
+                    <div class="seven columns">
+                        <a href="/main" class="button">Main page</a>
+                        <a href="/auth/signin" class="button">Sign in</a>
+                        <a href="/auth/signup" class="button button-primary">Sign up</a>
+                    </div>
+                </navbar>
+            </div>
+            <div class="row" style="margin-top: 5%">
+                <h4></h4>
+                <p>This index.html page is a placeholder with the CSS, font and favicon. It's just waiting for you to add some content! If you need some help hit up the <a href="http://www.getskeleton.com">Skeleton documentation</a>.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
