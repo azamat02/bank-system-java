@@ -16,29 +16,115 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" th:href="@{/css/normalize.css}">
     <link rel="stylesheet" th:href="@{/css/skeleton.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
 
-
+    <script defer src="https://kit.fontawesome.com/6726cbbd79.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
-
         <div class="row">
+<!--            Navbar-->
             <div class="row" style="margin-top: 20px;">
                 <navbar>
                     <div class="five columns">
                         <h1>Bank system</h1>
                     </div>
                     <div class="seven columns">
-                        <a href="/main" class="button">Main page</a>
-                        <a href="/auth/signin" class="button">Sign in</a>
-                        <a href="/auth/signup" class="button button-primary">Sign up</a>
+                        <a href="/" class="button">
+                            <span>
+                                <span class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#353535" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <polyline points="5 12 3 12 12 3 21 12 19 12" />
+                                        <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                                        <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                    </svg>
+                                </span>
+                                <span class="text">
+                                    Main page
+                                </span>
+                            </span>
+                        </a>
+                        <a href="/online_payments" class="button">
+                        <span>
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-wallet" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#353535" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
+                                    <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
+                                </svg>
+                            </span>
+                            <span class="text">
+                                Online payments
+                            </span>
+                        </span>
+                        </a>
+                        <a href="/money_operations" class="button">
+                        <span>
+                          <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cash" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#353535" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <rect x="7" y="9" width="14" height="10" rx="2" />
+                                <circle cx="14" cy="14" r="2" />
+                                <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                          <span class="text">
+                              Money operations
+                          </span>
+                        </span>
+                        </a>
+                        <a href="/auth/signin" class="button">
+                            <span>
+                                <span class="text">
+                                    Sign in
+                                </span>
+                                <span class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                      <path d="M20 12h-13l3 -3m0 6l-3 -3" />
+                                    </svg>
+                                </span>
+                            </span>
+                        </a>
+                        <a href="/auth/signup" class="button button-primary">
+                            <span>
+                                <span class="text">
+                                    Sign up
+                                </span>
+                                <span class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                      <path d="M20 12h-13l3 -3m0 6l-3 -3" />
+                                    </svg>
+                                </span>
+                            </span>
+                        </a>
+                        <a href="/profile" class="button button-primary">
+                            <span>
+                                <span class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <circle cx="12" cy="7" r="4" />
+                                      <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                    </svg>
+                                </span>
+                                <span class="text">
+                                    Profile
+                                </span>
+                            </span>
+                        </a>
                     </div>
                 </navbar>
             </div>
+
+<!--            Main-->
             <div class="row" style="margin-top: 5%">
                 <h4></h4>
                 <p>This index.html page is a placeholder with the CSS, font and favicon. It's just waiting for you to add some content! If you need some help hit up the <a href="http://www.getskeleton.com">Skeleton documentation</a>.</p>

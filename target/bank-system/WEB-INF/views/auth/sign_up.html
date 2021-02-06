@@ -24,41 +24,41 @@
     <div class="row" style="margin-top: 5%">
         <h1>Sign up</h1>
         <hr>
-        <form>
+        <form th:method="POST" th:action="@{/auth/signup}", th:object="${user}">
             <div class="row">
                 <div class="six columns">
                     <label for="login_name">Your name</label>
-                    <input class="u-full-width" required type="text" placeholder="test" id="login_name">
+                    <input class="u-full-width" th:field="*{name}" required type="text" placeholder="test" id="login_name">
                 </div>
                 <div class="six columns">
                     <label for="login_email">Your email</label>
-                    <input class="u-full-width" required type="email" placeholder="test@mailbox.com" id="login_email">
+                    <input class="u-full-width" th:field="*{email}" required type="email" placeholder="test@mailbox.com" id="login_email">
                 </div>
             </div>
             <div class="row">
                 <div class="six columns">
                     <label for="login_login">Your login</label>
-                    <input class="u-full-width" required type="text" placeholder="login" id="login_login">
+                    <input class="u-full-width" th:field="*{login}"  required type="text" placeholder="login" id="login_login">
                 </div>
                 <div class="six columns">
                     <label for="login_phone_number">Your phone number</label>
-                    <input class="u-full-width" required type="text" placeholder="7700-000-00-00" id="login_phone_number">
+                    <input class="u-full-width" th:field="*{phone}" required type="text" placeholder="7700-000-00-00" id="login_phone_number">
                 </div>
             </div>
             <div class="row">
                 <div class="six columns">
                     <label for="login_pass">Your password</label>
-                    <input class="u-full-width" required type="password" placeholder="password" id="login_pass">
+                    <input class="u-full-width" th:field="*{password}" required type="password" placeholder="password" id="login_pass">
                 </div>
                 <div class="six columns">
                     <label for="login_pass2">Your password again</label>
-                    <input class="u-full-width" required type="password" placeholder="repeat password " id="login_pass2">
+                    <input class="u-full-width" required type="password" placeholder="repeat password " name="password2" id="login_pass2">
                 </div>
             </div>
 
             <div class="row">
                 <input class="button-primary" type="submit" value="SIGN IN">
-                <a class="button" href="/main">GO BACK TO MAIN PAGE</a>
+                <a class="button" href="/">GO BACK TO MAIN PAGE</a>
             </div>
         </form>
 

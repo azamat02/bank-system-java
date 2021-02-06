@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Operation history</title>
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/skeleton.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
+
+    <script defer src="https://kit.fontawesome.com/6726cbbd79.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <!--        Navbar-->
+            <div class="row" style="margin-top: 20px;">
+                <navbar>
+                    <div class="five columns">
+                        <h1>User Profile</h1>
+                    </div>
+                    <div class="seven columns">
+                        <a href="/" class="button">
+                        <span>
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#353535" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <polyline points="5 12 3 12 12 3 21 12 19 12" />
+                                    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                </svg>
+                            </span>
+                            <span class="text">
+                                Main page
+                            </span>
+                        </span>
+                        </a>
+                        <a href="/profile/operation_history" class="button">
+                        <span>
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-history" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#353535" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <polyline points="12 8 12 12 14 14" />
+                            <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" />
+                        </svg>
+                            </span>
+                            <span class="text">
+                                Operation history
+                            </span>
+                        </span>
+                        </a>
+                        <a href="/profile/cards" class="button">
+                        <span>
+                          <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#353535" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <rect x="3" y="5" width="18" height="14" rx="3" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                                <line x1="7" y1="15" x2="7.01" y2="15" />
+                                <line x1="11" y1="15" x2="13" y2="15" />
+                            </svg>
+                          </span>
+                          <span class="text">
+                              My cards
+                          </span>
+                        </span>
+                        </a>
+                    </div>
+                </navbar>
+            </div>
+
+            <!--        Main-->
+            <div class="row" style="margin-top: 5%; line-height: 40px">
+                <h3 style="border-bottom: solid 1px gainsboro">Operations history</h3>
+                <table class="u-full-width">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Operation</th>
+                        <th>From card</th>
+                        <th>Status</th>
+                        <th>Balance</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>03 june</td>
+                        <td>Withdraw from card</td>
+                        <td>**** 7211</td>
+                        <td>Done</td>
+                        <td>-50390 &#8376;</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

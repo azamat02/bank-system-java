@@ -24,23 +24,23 @@
         <div class="row" style="margin-top: 5%">
             <h1>Sign in</h1>
             <hr>
-            <form>
+            <form th:method="POST" th:action="@{/auth/signin}", th:object="${user}">
                 <div class="row">
                     <div class="six columns">
                         <label for="login_login">Your login</label>
-                        <input class="u-full-width" required type="text" placeholder="test" id="login_login">
+                        <input class="u-full-width" th:field="*{login}" required type="text" placeholder="test" id="login_login">
                     </div>
                 </div>
                 <div class="row">
                     <div class="six columns">
                         <label for="login_pass">Your password</label>
-                        <input class="u-full-width" required type="password" placeholder="password " id="login_pass">
+                        <input class="u-full-width" th:field="*{password}" required type="password" placeholder="password " id="login_pass">
                     </div>
                 </div>
 
                 <div class="row">
                     <input class="button-primary" type="submit" value="SIGN IN">
-                    <a class="button" href="/main">GO BACK TO MAIN PAGE</a>
+                    <a class="button" href="/">GO BACK TO MAIN PAGE</a>
                 </div>
             </form>
 
