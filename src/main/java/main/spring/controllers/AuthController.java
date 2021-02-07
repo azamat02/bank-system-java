@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import main.spring.dao.UserDAO;
 import main.spring.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final UserDAO userDAO;
 
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    public void PasswordEncoder(PasswordEncoder passwordEncoder)
+    { this.passwordEncoder = passwordEncoder;}
+
     @Autowired
     public AuthController(UserDAO userDAO)
     {
@@ -20,8 +26,7 @@ public class AuthController {
     }
 
     @GetMapping("/signin")
-    public String getLoginPage(Model model){
-        model.addAttribute("user", new User());
+    public String getLoginPage(){
         return "/auth/sign_in";
     }
 
@@ -31,18 +36,23 @@ public class AuthController {
         return "/auth/sign_up";
     }
 
-    @PostMapping("/signin")
-    public String signIn(@ModelAttribute("user") User user, @PathVariable("password2") String password2){
-        return "/main";
-    }
-
+//    Registration
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute("user") @Valid User user){
-        System.out.println(user.getName());
-        System.out.println(user.getEmail());
-        System.out.println(user.getLogin());
-        System.out.println(user.getPhone());
-        System.out.println(user.getPassword());
-        return "/main/main";
+    public String signUp(Model model, @RequestParam("password2") String password2, @ModelAttribute("user") User user){
+        String error_message = "";
+        if (userDAO.findByLogin(user.getLogin()) != null){
+            error_message = "Entered login is exist!";
+            model.addAttribute("message", error_message);
+            return "/auth/sign_up";
+        }
+        if (!user.getPassword().equals(password2)){
+            error_message = "Entered passwords are not same!";
+            model.addAttribute("message", error_message);
+            return "/auth/sign_up";
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userDAO.createUser(user);
+            return "redirect: /auth/signin";
+        }
     }
 }

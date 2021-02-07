@@ -1,12 +1,14 @@
 package main.spring.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name="UserEntity")
 @Table(name = "users")
-public class User {
+public class User implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "name")
@@ -24,17 +26,29 @@ public class User {
     @Column(name = "password")
     public String password;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id")
+    private Role role;
+    public Role getRole()
+    {
+        return role;
+    }
+    public void setRole(Role role)
+    {
+        this.role = role;
+    }
+
     public User() {
     }
 
-    public User(Integer id, String name, String login, String email, String phone, String password, String password2) {
-        this.id = id;
+    public User(String name, String login, String email, String phone, String password) {
         this.name = name;
         this.login = login;
         this.email = email;
         this.phone = phone;
         this.password = password;
     }
+
 
     public Integer getId() {
         return id;

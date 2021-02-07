@@ -1,12 +1,15 @@
 package main.spring.dao;
 
+import main.spring.models.Role;
 import main.spring.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -17,19 +20,14 @@ import java.util.List;
 public class UserDAO {
 
     private SessionFactory sessionFactory;
-    Session session;
     List<User> userList;
 
-    public UserDAO()
+    @Autowired
+    public UserDAO(SessionFactory sessionFactory)
     {
-        Configuration configuration = new Configuration()
-                .addAnnotatedClass(User.class)
-                .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect")
-                .setProperty("hibernate.connection.datasource", "java:/comp/env/jdbc/practice")
-                .setProperty("hibernate.order_updates", "true")
-                .setProperty("show_sql", "true");
-        sessionFactory = configuration.buildSessionFactory();
+        this.sessionFactory = sessionFactory;
     }
+
 
     public void configureEnd()
     {
@@ -61,8 +59,19 @@ public class UserDAO {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         try {
+            CriteriaBuilder builder1 = session.getCriteriaBuilder();
+            CriteriaQuery<Role> q1 = builder1.createQuery(Role.class);
+            Root<Role> root1 = q1.from(Role.class);
+
+            Predicate predicateRole = builder1.equal(root1.get("name"), "ROLE_USER");
+            Role role = session.createQuery(q1.where(predicateRole)).getSingleResult();
+            user.setRole(role);
+
             session.persist(user);
-            session.getTransaction();
+            session.getTransaction().commit();
+        }
+        catch (NoResultException e){
+
         }
         finally {
              session.close();
@@ -72,10 +81,13 @@ public class UserDAO {
     public User findById(int id){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        User user;
+        User user = null;
         try {
             user = session.find(User.class, id);
             session.getTransaction();
+        }
+        catch (NoResultException e){
+
         }
         finally {
             session.close();
@@ -87,15 +99,17 @@ public class UserDAO {
     public User findByLogin(String login){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        User user;
+        User user = null;
         try {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> q1 = criteriaBuilder.createQuery(User.class);
             Root<User> root = q1.from(User.class);
             Predicate userByLogin = criteriaBuilder.equal(root.get("login"), login);
-            Predicate search = criteriaBuilder.or(userByLogin);
-            user = session.createQuery(q1.where(search)).getSingleResult();
+            user = session.createQuery(q1.where(userByLogin)).getSingleResult();
             session.getTransaction().commit();
+        }
+        catch (NoResultException e){
+
         }
         finally {
             session.close();

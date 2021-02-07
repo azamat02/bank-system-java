@@ -25,6 +25,9 @@
         <h1>Sign up</h1>
         <hr>
         <form th:method="POST" th:action="@{/auth/signup}", th:object="${user}">
+            <div th:if="${message}" class="error" style="border: #e63946 solid 1px; color: #e63946; padding: 10px 20px; margin-bottom: 10px; border-radius: 5px; max-width: 500px">
+                <span th:text="${message}"></span>
+            </div>
             <div class="row">
                 <div class="six columns">
                     <label for="login_name">Your name</label>
@@ -52,12 +55,12 @@
                 </div>
                 <div class="six columns">
                     <label for="login_pass2">Your password again</label>
-                    <input class="u-full-width" required type="password" placeholder="repeat password " name="password2" id="login_pass2">
+                    <input class="u-full-width" th:name="password2" required type="password" placeholder="repeat password " name="password2" id="login_pass2">
                 </div>
             </div>
 
             <div class="row">
-                <input class="button-primary" type="submit" value="SIGN IN">
+                <input class="button-primary" type="submit" value="SIGN UP">
                 <a class="button" href="/">GO BACK TO MAIN PAGE</a>
             </div>
         </form>

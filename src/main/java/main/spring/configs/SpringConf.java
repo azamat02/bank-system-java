@@ -2,6 +2,7 @@ package main.spring.configs;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -66,6 +69,28 @@ public class SpringConf implements WebMvcConfigurer {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         registry.viewResolver(resolver);
+    }
+
+    @Bean
+    public LocalSessionFactoryBean sessionFactory()
+    {
+        Properties hibernateProperties = new Properties();
+        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
+        hibernateProperties.setProperty("hibernate.connection.datasource", "java:/comp/env/jdbc/practice");
+        hibernateProperties.setProperty("spring.jpa.hibernate.ddl-auto", "create");
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setPackagesToScan("main.spring.models");
+        sessionFactory.setHibernateProperties(hibernateProperties);
+        return sessionFactory;
+    }
+
+    @Bean
+    public HibernateTransactionManager txManager()
+    {
+        HibernateTransactionManager htm = new HibernateTransactionManager();
+        SessionFactory sf = sessionFactory().getObject();
+        htm.setSessionFactory(sf);
+        return htm;
     }
 
 }

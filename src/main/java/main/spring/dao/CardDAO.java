@@ -5,7 +5,9 @@ import main.spring.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -17,15 +19,10 @@ public class CardDAO {
     Session session;
     List<javax.smartcardio.Card> cardList;
 
-    public CardDAO()
+    @Autowired
+    public CardDAO(SessionFactory sessionFactory)
     {
-        Configuration configuration = new Configuration()
-                .addAnnotatedClass(User.class)
-                .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect")
-                .setProperty("hibernate.connection.datasource", "java:/comp/env/jdbc/practice")
-                .setProperty("hibernate.order_updates", "true")
-                .setProperty("show_sql", "true");
-        sessionFactory = configuration.buildSessionFactory();
+        this.sessionFactory = sessionFactory;
     }
 
     public void configureEnd()
@@ -37,7 +34,7 @@ public class CardDAO {
     public List<Card> findByUserId(int id){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<Card> userCardList;
+        List<Card> userCardList = null;
         try {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Card> q1 = criteriaBuilder.createQuery(Card.class);
@@ -46,6 +43,9 @@ public class CardDAO {
             Predicate search = criteriaBuilder.or(cardByUserId);
             userCardList = session.createQuery(q1.where(search)).getResultList();
             session.getTransaction().commit();
+        }
+        catch (NoResultException e){
+
         }
         finally {
             session.close();
@@ -57,7 +57,7 @@ public class CardDAO {
     public Card findCardByNumber(String card_number){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Card card;
+        Card card = null;
         try {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Card> q1 = criteriaBuilder.createQuery(Card.class);
@@ -66,6 +66,9 @@ public class CardDAO {
             Predicate search = criteriaBuilder.or(cardByUserId);
             card = session.createQuery(q1.where(search)).getSingleResult();
             session.getTransaction().commit();
+        }
+        catch (NoResultException e){
+
         }
         finally {
             session.close();
