@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.NoResultException;
@@ -17,6 +18,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Component
+@Scope(scopeName = "prototype")
 public class UserDAO {
 
     private SessionFactory sessionFactory;
@@ -77,6 +79,7 @@ public class UserDAO {
              session.close();
         }
     }
+
 //    Find by id
     public User findById(int id){
         Session session = sessionFactory.openSession();
@@ -117,4 +120,19 @@ public class UserDAO {
         return user;
     }
 
+    //Change pass
+    public void changePassOfUser(User user){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        try {
+            session.update(user);
+            session.getTransaction().commit();
+        }
+        catch (NoResultException e){
+
+        }
+        finally {
+            session.close();
+        }
+    }
 }

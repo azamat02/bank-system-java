@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
@@ -54,5 +56,16 @@ public class AuthController {
             userDAO.createUser(user);
             return "redirect: /auth/signin";
         }
+    }
+
+    //Change password
+    @PostMapping("/changepass")
+    public String changePass(Principal principal, Model model, @RequestParam("password") String password, @RequestParam("password2") String password2){
+        User us = userDAO.findByLogin(principal.getName());
+        password = passwordEncoder.encode(password);
+        us.setPassword(password);
+        userDAO.changePassOfUser(us);
+        model.addAttribute("message", "Password successfully changed!");
+        return "/profile/profile";
     }
 }

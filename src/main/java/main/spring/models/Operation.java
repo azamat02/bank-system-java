@@ -8,7 +8,7 @@ import java.util.Date;
 @Table(name = "operation_history")
 public class Operation {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "user_id")
@@ -27,12 +27,12 @@ public class Operation {
     public String status;
 
     @Column(name = "balance")
-    public Integer balance;
+    public String balance;
 
     public Operation() {
     }
 
-    public Operation(Integer id, Integer user_id, Date date, String operation, String from_card, String status, Integer balance) {
+    public Operation(Integer id, Integer user_id, Date date, String operation, String from_card, String status, String balance) {
         this.id = id;
         this.user_id = user_id;
         this.date = date;
@@ -90,11 +90,11 @@ public class Operation {
         this.status = status;
     }
 
-    public Integer getBalance() {
+    public String getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(String balance) {
         this.balance = balance;
     }
 }

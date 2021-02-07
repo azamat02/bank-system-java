@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Table(name = "cards")
 public class Card {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "user_id")
@@ -22,9 +22,6 @@ public class Card {
     @Column(name = "cvv")
     public Integer cvv;
 
-    @Column(name = "pin")
-    public Integer pin;
-
     @Column(name = "card_type")
     public String card_type;
 
@@ -34,13 +31,12 @@ public class Card {
     public Card() {
     }
 
-    public Card(Integer id, Integer user_id, String card_number, String expired_date, Integer cvv, Integer pin, String card_type, Integer balance) {
+    public Card(Integer id, Integer user_id, String card_number, String expired_date, Integer cvv, String card_type, Integer balance) {
         this.id = id;
         this.user_id = user_id;
         this.card_number = card_number;
         this.expired_date = expired_date;
         this.cvv = cvv;
-        this.pin = pin;
         this.card_type = card_type;
         this.balance = balance;
     }
@@ -83,14 +79,6 @@ public class Card {
 
     public void setCvv(Integer cvv) {
         this.cvv = cvv;
-    }
-
-    public Integer getPin() {
-        return pin;
-    }
-
-    public void setPin(Integer pin) {
-        this.pin = pin;
     }
 
     public String getCard_type() {

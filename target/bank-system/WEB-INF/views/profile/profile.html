@@ -87,10 +87,11 @@
 <!--        Main-->
         <div class="row" style="margin-top: 5%; line-height: 40px">
             <h3 style="border-bottom: solid 1px gainsboro">Information</h3>
-            <span><b>User name:</b> Azamat</span><br>
-            <span><b>User email:</b> azamattolegenov1@gmail.com</span><br>
-            <span><b>User phone:</b> 8700-548-88-51</span><br>
-            <span><b>User login:</b> azamat09</span><br><br>
+            <div th:if="${message}" th:text="${message}" style="padding: 10px 20px; border-radius: 5px; border: solid 1px #457b9d; color: #457b9d;">Message</div>
+            <span th:inline="text"><b>User name:</b> [[${user.getName()}]]</span><br>
+            <span th:inline="text"><b>User email:</b> [[${user.getEmail()}]]</span><br>
+            <span th:inline="text"><b>User phone:</b> [[${user.getPhone()}]]</span><br>
+            <span th:inline="text"><b>User login:</b> [[${user.getLogin()}]]</span><br><br>
 
             <h3 style="border-bottom: solid 1px gainsboro">Change password</h3>
             <form th:method="POST" th:action="@{/auth/changepass}" id="change_pass_form">

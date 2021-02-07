@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -14,6 +16,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
+
+@Component
+@Scope(scopeName = "prototype")
 
 public class OperationDAO {
     private SessionFactory sessionFactory;
@@ -62,7 +67,7 @@ public class OperationDAO {
         session.beginTransaction();
         try {
             session.persist(operation);
-            session.getTransaction();
+            session.getTransaction().commit();
         }
         finally {
             session.close();

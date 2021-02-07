@@ -115,4 +115,31 @@ $(document).ready(function (){
         $("#back-button").hide()
     })
 
+    $("#error-msg").hide()
+    $("#card_number2").keyup(()=>{
+        let toCardNumber = $("#card_number2").val()
+        //Check if card exist
+        $.ajax({
+            url: 'http://localhost:8080/payment/card_exist',
+            method: 'get',
+            data: {cardNumber: toCardNumber},
+            success: function(data){
+                if (data=="exist"){
+                    console.log("Entered card number exist!")
+                    $("#error-msg").slideUp()
+                    $("#pay-button").prop('disabled', false);
+                    $("#pay-button").addClass("button-primary");
+                    $("#pay-button").removeClass("button");
+                } else {
+                    console.log("Entered card number does not exist!")
+                    $("#error-msg").slideDown()
+                    $("#error-msg").text("Entered card number does not exist!");
+                    $("#pay-button").prop('disabled', true);
+                    $("#pay-button").removeClass("button-primary");
+                    $("#pay-button").addClass("button");
+                }
+            }
+        });
+    })
+
 })

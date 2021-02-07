@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,6 +15,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
+
+@Component
+@Scope(scopeName = "prototype")
 
 public class CardDAO {
     private SessionFactory sessionFactory;
@@ -28,6 +33,19 @@ public class CardDAO {
     public void configureEnd()
     {
         this.sessionFactory.close();
+    }
+
+//    Update balance
+    public void updateCardBalance(Card card){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        try {
+            session.update(card);
+            session.getTransaction().commit();
+        }
+        finally {
+            session.close();
+        }
     }
 
 //    Get cards by user id
@@ -51,6 +69,29 @@ public class CardDAO {
             session.close();
         }
         return userCardList;
+    }
+
+//    Get card by id
+    public Card findCardById(int id){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Card card = null;
+        try {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Card> q1 = criteriaBuilder.createQuery(Card.class);
+            Root<Card> root = q1.from(Card.class);
+            Predicate cardById = criteriaBuilder.equal(root.get("id"), id);
+            Predicate search = criteriaBuilder.or(cardById);
+            card = session.createQuery(q1.where(search)).getSingleResult();
+            session.getTransaction().commit();
+        }
+        catch (NoResultException e){
+
+        }
+        finally {
+            session.close();
+        }
+        return card;
     }
 
 //    Get card by number
@@ -82,7 +123,7 @@ public class CardDAO {
         session.beginTransaction();
         try {
             session.persist(card);
-            session.getTransaction();
+            session.getTransaction().commit();
         }
         finally {
             session.close();

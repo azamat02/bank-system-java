@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layout/root_layout"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Bank system</title>
@@ -49,7 +54,7 @@
                                 </span>
                             </span>
                         </a>
-                        <a href="/online_payments" class="button">
+                        <a href="/online_payments" sec:authorize="isAuthenticated()" class="button">
                         <span>
                             <span class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-wallet" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#353535" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -63,7 +68,7 @@
                             </span>
                         </span>
                         </a>
-                        <a href="/money_operations" class="button">
+                        <a href="/money_operations" sec:authorize="isAuthenticated()" class="button">
                         <span>
                           <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cash" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#353535" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -78,7 +83,7 @@
                           </span>
                         </span>
                         </a>
-                        <a href="/auth/signin" class="button">
+                        <a href="/auth/signin" sec:authorize="isAnonymous()" class="button">
                             <span>
                                 <span class="text">
                                     Sign in
@@ -92,7 +97,7 @@
                                 </span>
                             </span>
                         </a>
-                        <a href="/auth/signup" class="button button-primary">
+                        <a href="/auth/signup" sec:authorize="isAnonymous()" class="button button-primary">
                             <span>
                                 <span class="text">
                                     Sign up
@@ -106,7 +111,7 @@
                                 </span>
                             </span>
                         </a>
-                        <a href="/profile" class="button button-primary">
+                        <a href="/profile" sec:authorize="isAuthenticated()" class="button button-primary">
                             <span>
                                 <span class="icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -118,6 +123,18 @@
                                 <span class="text">
                                     Profile
                                 </span>
+                            </span>
+                        </a>
+                        <a href="/logout" sec:authorize="isAuthenticated()" class="button button-primary">
+                            <span>
+                                <span class="text">
+                                    Logout
+                                </span>
+                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                  <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                                </svg>
                             </span>
                         </a>
                     </div>

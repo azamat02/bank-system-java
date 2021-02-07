@@ -93,24 +93,26 @@
                         <tr>
                             <th>Card Number</th>
                             <th>Expired date</th>
+                            <th>Card type</th>
                             <th>CVV</th>
-                            <th>PIN</th>
                             <th>BALANCE</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:each="card: ${card_list}">
                         <tr>
-                            <td>4400 4431 3322 1123</td>
-                            <td>02/24</td>
-                            <td>991</td>
-                            <td>9921</td>
-                            <td>1000 &#8376;</td>
+                            <td th:text="${card.getCard_number()}">Card number</td>
+                            <td th:text="${card.getExpired_date()}">Expire date</td>
+                            <td th:text="${card.getCard_type()}">Card type</td>
+                            <td th:text="${card.getCvv()}">CVV</td>
+                            <td th:inline="text"> [[${card.getBalance()}]] &#8376;</td>
                         </tr>
                         </tbody>
                     </table>
             </div>
+            <a href="/profile/card/create_card" class="button button-primary">CREATE NEW CARD</a>
         </div>
     </div>
+
 </div>
 </body>
 </html>

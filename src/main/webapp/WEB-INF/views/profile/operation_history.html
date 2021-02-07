@@ -97,12 +97,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>03 june</td>
-                        <td>Withdraw from card</td>
-                        <td>**** 7211</td>
-                        <td>Done</td>
-                        <td>-50390 &#8376;</td>
+                    <tr th:each="operation : ${opers}">
+                        <td th:inline="text">[[${operation.getDate()}]] &#8376;</td>
+                        <td th:inline="text">[[${operation.getOperation()}]] &#8376;</td>
+                        <td th:inline="text">[[${operation.getFrom_card()}]] &#8376;</td>
+                        <td th:inline="text">[[${operation.getStatus()}]] &#8376;</td>
+                        <td th:inline="text">[[${operation.getBalance()}]] &#8376;</td>
                     </tr>
                     </tbody>
                 </table>

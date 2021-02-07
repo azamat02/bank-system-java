@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layout/root_layout"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Online payments</title>
@@ -51,7 +56,7 @@
                                 </span>
                             </span>
                     </a>
-                    <a href="/online_payments" class="button">
+                    <a href="/online_payments" sec:authorize="isAuthenticated()" class="button">
                         <span>
                             <span class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-wallet" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#353535" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -65,7 +70,7 @@
                             </span>
                         </span>
                     </a>
-                    <a href="/money_operations" class="button">
+                    <a href="/money_operations" sec:authorize="isAuthenticated()" class="button">
                         <span>
                           <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cash" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#353535" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -80,7 +85,7 @@
                           </span>
                         </span>
                     </a>
-                    <a href="/auth/signin" class="button">
+                    <a href="/auth/signin" sec:authorize="isAnonymous()" class="button">
                             <span>
                                 <span class="text">
                                     Sign in
@@ -94,7 +99,7 @@
                                 </span>
                             </span>
                     </a>
-                    <a href="/auth/signup" class="button button-primary">
+                    <a href="/auth/signup" sec:authorize="isAnonymous()" class="button button-primary">
                             <span>
                                 <span class="text">
                                     Sign up
@@ -108,7 +113,7 @@
                                 </span>
                             </span>
                     </a>
-                    <a href="/profile" class="button button-primary">
+                    <a href="/profile" sec:authorize="isAuthenticated()" class="button button-primary">
                             <span>
                                 <span class="icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -122,6 +127,18 @@
                                 </span>
                             </span>
                     </a>
+                    <a href="/logout" sec:authorize="isAuthenticated()" class="button button-primary">
+                            <span>
+                                <span class="text">
+                                    Logout
+                                </span>
+                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                  <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                                </svg>
+                            </span>
+                    </a>
                 </div>
             </navbar>
         </div>
@@ -129,6 +146,9 @@
 <!--        Main-->
         <div class="row" style="margin-top: 5%; line-height: 40px">
             <h3 style="border-bottom: solid 1px gainsboro">Organizations</h3>
+                <div th:if="${message != ''}" class="error" style="padding: 10px 20px; border-radius: 5px; border: solid 1px #457b9d; color: #457b9d; max-width: 500px;">
+                    <span th:text="${message}"></span>
+                </div>
                 <div class="org">
                     <div class="money-transfer-option" id="mobile_service" style="cursor: pointer; max-width: 500px !important;">
                         <span style="font-size: 28px;">
@@ -172,66 +192,75 @@
                     </div>
                 </div>
                 <div class="mobile_service">
-                    <form>
+                    <form action="/orgpayments/to_mobile_service" method="post">
                         <div class="row">
                             <div class="four columns">
                                 <label>Your phone</label>
-                                <input class="u-full-width" type="email" placeholder="8700-000-00-00">
+                                <input class="u-full-width" name="phone_number" type="text" placeholder="8700-000-00-00">
 
-                                <label>Choose credit card</label>
-                                <select class="u-full-width">
-                                    <option value="cardID">MASTERCARD **** 5532</option>
-                                    <option value="cardID">VISA **** 7142</option>
+                                <label for="cards3">Choose credit card</label>
+                                <select class="u-full-width" id="cards3" name="card_id">
+                                    <option th:each="card : ${user_cards}" th:value="${card.getId()}">
+                                        <span th:inline="text">
+                                            [[${card.getCard_number()}]] Balance: [[${card.getBalance()}]] &#8376;
+                                        </span>
+                                    </option>
                                 </select>
 
                                 <label>Pay sum</label>
-                                <input type="number" class="u-full-width" placeholder="Pay sum">
+                                <input type="number" class="u-full-width" name="pay_sum1" placeholder="Pay sum">
                             </div>
                         </div>
                         <input class="button-primary" type="submit" value="PAY">
                     </form>
                 </div>
                 <div class="charity_service">
-                    <form>
+                    <form action="/orgpayments/to_charity" method="post">
                         <div class="row">
                             <div class="four columns">
                                 <label for="org">Choose organization</label>
-                                <select class="u-full-width" id="org">
-                                    <option value="orgID">Dom malutka</option>
-                                    <option value="orgID">Sadaka</option>
+                                <select class="u-full-width" id="org" name="organization">
+                                    <option value="dom malutka">Dom malutka</option>
+                                    <option value="sadaka">Sadaka</option>
                                 </select>
 
-                                <label for="cards">Choose credit card</label>
-                                <select class="u-full-width" id="cards">
-                                    <option value="cardID">MASTERCARD **** 5532</option>
-                                    <option value="cardID">VISA **** 7142</option>
+                                <label for="cards">Choose card</label>
+                                <select class="u-full-width" id="cards" name="card_id">
+                                    <option th:each="card : ${user_cards}" th:value="${card.getId()}">
+                                        <span th:inline="text">
+                                            [[${card.getCard_number()}]] Balance: [[${card.getBalance()}]] &#8376;
+                                        </span>
+                                    </option>
                                 </select>
 
                                 <label>Pay sum</label>
-                                <input type="number" class="u-full-width" placeholder="Pay sum">
+                                <input type="number" class="u-full-width" name="pay_sum1" placeholder="Pay sum">
                             </div>
                         </div>
                         <input class="button-primary" type="submit" value="PAY">
                     </form>
                 </div>
                 <div class="house_service">
-                    <form>
+                    <form action="/orgpayments/to_house_services" method="post">
                         <div class="row">
                             <div class="four columns">
                                 <label for="org">Choose type</label>
-                                <select class="u-full-width">
-                                    <option value="orgID">For water</option>
-                                    <option value="orgID">For electricity</option>
+                                <select class="u-full-width" name="to_service">
+                                    <option value="for water">For water</option>
+                                    <option value="for electricity">For electricity</option>
                                 </select>
 
-                                <label for="cards">Choose credit card</label>
-                                <select class="u-full-width">
-                                    <option value="cardID">MASTERCARD **** 5532</option>
-                                    <option value="cardID">VISA **** 7142</option>
+                                <label for="cards">Choose card</label>
+                                <select class="u-full-width" id="cards2" name="card_id">
+                                    <option th:each="card : ${user_cards}" th:value="${card.getId()}">
+                                        <span th:inline="text">
+                                            [[${card.getCard_number()}]] Balance: [[${card.getBalance()}]] &#8376;
+                                        </span>
+                                    </option>
                                 </select>
 
                                 <label>Pay sum</label>
-                                <input type="number" class="u-full-width" placeholder="Pay sum">
+                                <input type="number" class="u-full-width" name="pay_sum1" placeholder="Pay sum">
                             </div>
                         </div>
                         <input class="button-primary" type="submit" value="PAY">
