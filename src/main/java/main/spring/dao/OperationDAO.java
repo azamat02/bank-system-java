@@ -6,6 +6,7 @@ import main.spring.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ import java.util.List;
 public class OperationDAO {
     private SessionFactory sessionFactory;
     Session session;
-    List<javax.smartcardio.Card> cardList;
+    List<Operation> operationList;
 
     @Autowired
     public OperationDAO(SessionFactory sessionFactory)
@@ -31,14 +32,33 @@ public class OperationDAO {
         this.sessionFactory = sessionFactory;
     }
 
-
-
     public void configureEnd()
     {
         this.sessionFactory.close();
     }
 
-//    Get operations by user id
+//    Get all operations list
+    public List<Operation> getAllOperationsList(){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        try
+        {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Operation> criteria = builder.createQuery(Operation.class);
+            Root<Operation> root = criteria.from(Operation.class);
+            criteria.select(root);
+            Query<Operation> query = session.createQuery(criteria);
+            operationList = query.getResultList();
+            session.getTransaction().commit();
+        }
+        finally
+        {
+            session.close();
+        }
+        return operationList;
+    }
+
+    //    Get operations by user id
     public List<Operation> findOperationsByUserId(int id){
         Session session = sessionFactory.openSession();
         session.beginTransaction();

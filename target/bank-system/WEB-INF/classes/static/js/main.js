@@ -142,4 +142,81 @@ $(document).ready(function (){
         });
     })
 
+    // For admin panel
+    $("#users_list").hide()
+    $("#cards_list").hide()
+    $("#operations_list").hide()
+
+
+    $.ajax({
+        url: 'http://localhost:8080/admin/get_cards',
+        method: 'get',
+        success: function(data){
+            let counter1 = 0;
+            while(data[counter1] != null){
+                let id1 = data[counter1]['id'];
+                let user_id1 = data[counter1]['user_id'];
+                let card_number1 = data[counter1]['card_number'];
+                let expired_date1 = data[counter1]['expired_date'];
+                let cvv1 = data[counter1]['cvv'];
+                let card_type1 = data[counter1]['card_type'];
+                let balance1 = data[counter1]['balance'] + " &#8376;";
+                let content1 =
+                    `
+                        <tr>
+                            <td>${id1}</td>
+                            <td>${user_id1}</td>
+                            <td>${card_number1}</td>
+                            <td>${expired_date1}</td>
+                            <td>${cvv1}</td>
+                            <td>${card_type1}</td>
+                            <td>${balance1}</td>
+                        </tr>
+                    `
+                $("#cards_list_table_body").html($("#cards_list_table_body").html()+content1)
+                counter1++;
+            }
+        }
+    });
+    $.ajax({
+        url: 'http://localhost:8080/admin/get_operations',
+        method: 'get',
+        success: function(data){
+            let counter2 = 0;
+            while(data[counter2]){
+                let id2 = data[counter2]['id'];
+                let user_id2 = data[counter2]['user_id'];
+                let date2 = data[counter2]['date'];
+                let operation2 = data[counter2]['operation'];
+                let from_card2 = data[counter2]['from_card'];
+                let status2 = data[counter2]['status'];
+                let balance2 = data[counter2]['balance'] + " &#8376;";
+                let content2 =
+                    `
+                        <tr>
+                            <td>${id2}</td>
+                            <td>${user_id2}</td>
+                            <td>${date2}</td>
+                            <td>${operation2}</td>
+                            <td>${from_card2}</td>
+                            <td>${status2}</td>
+                            <td>${balance2}</td>
+                        </tr>
+                    `
+                $("#operations_list_table").html($("#operations_list_table").html()+content2)
+                counter2++;
+            }
+        }
+    });
+
+    $("#user_list_button").click(()=>{
+        $("#users_list").slideToggle("slow");
+    })
+    $("#card_list_button").click(()=>{
+        $("#cards_list").slideToggle("slow");
+    })
+    $("#operations_list_button").click(()=>{
+        $("#operations_list").slideToggle("slow");
+    })
+
 })

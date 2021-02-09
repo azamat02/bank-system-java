@@ -68,4 +68,9 @@ public class MainController {
         return "/main/money_operations";
     }
 
+    @GetMapping("/admin")
+    public String adminPanelPage(Model model){
+        model.addAttribute("users", userDAO.getUserList());
+        return "/main/admin_panel";
+    }
 }

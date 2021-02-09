@@ -5,6 +5,7 @@ import main.spring.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ import java.util.List;
 public class CardDAO {
     private SessionFactory sessionFactory;
     Session session;
-    List<javax.smartcardio.Card> cardList;
+    List<Card> cardList;
 
     @Autowired
     public CardDAO(SessionFactory sessionFactory)
@@ -33,6 +34,27 @@ public class CardDAO {
     public void configureEnd()
     {
         this.sessionFactory.close();
+    }
+
+//    Get all cards list
+    public List<Card> getAllCardsList(){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        try
+        {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Card> criteria = builder.createQuery(Card.class);
+            Root<Card> root = criteria.from(Card.class);
+            criteria.select(root);
+            Query<Card> query = session.createQuery(criteria);
+            cardList = query.getResultList();
+            session.getTransaction().commit();
+        }
+        finally
+        {
+            session.close();
+        }
+        return cardList;
     }
 
 //    Update balance
