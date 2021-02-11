@@ -4,6 +4,7 @@ package main.spring.controllers;
 import main.spring.dao.CardDAO;
 import main.spring.dao.OperationDAO;
 import main.spring.dao.UserDAO;
+import main.spring.interfaces.TransferInterface;
 import main.spring.models.Card;
 import main.spring.models.Operation;
 import main.spring.models.User;
@@ -42,10 +43,16 @@ public class TransferController {
             model.addAttribute("message", "On selected card not enough money");
             return "/main/money_operations";
         } else {
-//            Cut 1%
-            pay_sum1 = pay_sum1-pay_sum1/100;
 //            Update card balance
             card.setBalance(card.getBalance()-pay_sum1);
+//            Cut 1%
+            TransferInterface transferInterface = (x)->{
+                return x = x-x/100;
+            };
+            pay_sum1 = transferInterface.cut(pay_sum1);
+            //Sending paysum1 to bank....
+            //.....
+
             cardDAO.updateCardBalance(card);
 //            Save operation
             String str = "Transfer from card "+card.card_type.toUpperCase(Locale.ROOT)+" **** "+card.getCard_number().substring(14,19);
@@ -79,13 +86,16 @@ public class TransferController {
             model.addAttribute("message", "On selected card not enough money");
             return "/main/money_operations";
         } else {
-            if (pay_sum1 >= 100000){
-                //Cut 1%
-                pay_sum1 = pay_sum1-pay_sum1/100;
-            }
-//            Update card sender balance
+            //            Update card sender balance
             card_sender.setBalance(card_sender.getBalance()-pay_sum1);
             cardDAO.updateCardBalance(card_sender);
+            if (pay_sum1 >= 100000){
+                //Cut 1%
+                TransferInterface transferInterface = (x)->{
+                    return x = x-x/100;
+                };
+                pay_sum1 = transferInterface.cut(pay_sum1);
+            }
 //            Update card receiver balance
             card_reciever.setBalance(card_reciever.getBalance()+pay_sum1);
             cardDAO.updateCardBalance(card_reciever);

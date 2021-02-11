@@ -27,6 +27,7 @@ public class CustomFilter implements Filter{
 
             writer.append(str);
             writer.close();
+
             System.out.println("FILTERING");
         }
 

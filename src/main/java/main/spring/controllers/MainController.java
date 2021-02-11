@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.Principal;
@@ -71,7 +72,8 @@ public class MainController {
     }
 
     @GetMapping("/admin")
-    public String adminPanelPage(Model model){
+    public String adminPanelPage(Principal principal, Model model, HttpServletRequest request){
+        request.getSession().setAttribute("admin_name", principal.getName());
         model.addAttribute("users", userDAO.getUserList());
         return "/main/admin_panel";
     }

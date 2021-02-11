@@ -247,6 +247,36 @@
                         </div>
                     </form>
                 </div>
+                <div id="for-convertation">
+                    <form style="width: 500px">
+                        <label>From currency</label>
+                        <select class="u-full-width" name="currency1">
+                            <option value="usd">USD</option>
+                            <option value="eur">EUR</option>
+                            <option value="kzt">KZT</option>
+                            <option value="rub">RUB</option>
+                        </select>
+                        <label>Enter sum</label>
+                        <input type="text" class="u-full-width" placeholder="1000">
+                        <label>To currency</label>
+                        <select class="u-full-width" name="currency2">
+                            <option value="usd">USD</option>
+                            <option value="eur">EUR</option>
+                            <option value="kzt">KZT</option>
+                            <option value="rub">RUB</option>
+                        </select>
+                        <label>You will get <span>1000</span></label>
+                        <label>Choose card to send</label>
+                        <select class="u-full-width" name="card_id_sender">
+                            <option th:each="card : ${user_cards}" th:value="${card.getId()}">
+                                        <span th:inline="text">
+                                            [[${card.getCard_number()}]] Balance: [[${card.getBalance()}]] &#8376;
+                                        </span>
+                            </option>
+                        </select>
+                        <button class="button button-primary">SEND</button>
+                    </form>
+                </div>
             </div>
             <button class="button" id="back-button">BACK</button>
 
@@ -254,12 +284,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>
-
-
-
-<!--<div id="for-convertation">-->
-<!--    Convertation-->
-<!--</div>-->

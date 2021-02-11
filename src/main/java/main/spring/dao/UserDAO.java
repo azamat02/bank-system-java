@@ -37,22 +37,27 @@ public class UserDAO {
     }
 
     public List<User> getUserList(){
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        try
-        {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<User> criteria = builder.createQuery(User.class);
-            Root<User> root = criteria.from(User.class);
-            criteria.select(root);
-            Query<User> query = session.createQuery(criteria);
-            userList = query.getResultList();
-            session.getTransaction().commit();
-        }
-        finally
-        {
-            session.close();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Session session = sessionFactory.openSession();
+                session.beginTransaction();
+                try
+                {
+                    CriteriaBuilder builder = session.getCriteriaBuilder();
+                    CriteriaQuery<User> criteria = builder.createQuery(User.class);
+                    Root<User> root = criteria.from(User.class);
+                    criteria.select(root);
+                    Query<User> query = session.createQuery(criteria);
+                    userList = query.getResultList();
+                    session.getTransaction().commit();
+                }
+                finally
+                {
+                    session.close();
+                }
+            }
+        }).start();
         return userList;
     }
 

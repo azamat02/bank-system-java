@@ -39,22 +39,27 @@ public class OperationDAO {
 
 //    Get all operations list
     public List<Operation> getAllOperationsList(){
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        try
-        {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Operation> criteria = builder.createQuery(Operation.class);
-            Root<Operation> root = criteria.from(Operation.class);
-            criteria.select(root);
-            Query<Operation> query = session.createQuery(criteria);
-            operationList = query.getResultList();
-            session.getTransaction().commit();
-        }
-        finally
-        {
-            session.close();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Session session = sessionFactory.openSession();
+                session.beginTransaction();
+                try
+                {
+                    CriteriaBuilder builder = session.getCriteriaBuilder();
+                    CriteriaQuery<Operation> criteria = builder.createQuery(Operation.class);
+                    Root<Operation> root = criteria.from(Operation.class);
+                    criteria.select(root);
+                    Query<Operation> query = session.createQuery(criteria);
+                    operationList = query.getResultList();
+                    session.getTransaction().commit();
+                }
+                finally
+                {
+                    session.close();
+                }
+            }
+        }).start();
         return operationList;
     }
 

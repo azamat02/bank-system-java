@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.management.relation.RoleInfoNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -38,22 +39,27 @@ public class CardDAO {
 
 //    Get all cards list
     public List<Card> getAllCardsList(){
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        try
-        {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Card> criteria = builder.createQuery(Card.class);
-            Root<Card> root = criteria.from(Card.class);
-            criteria.select(root);
-            Query<Card> query = session.createQuery(criteria);
-            cardList = query.getResultList();
-            session.getTransaction().commit();
-        }
-        finally
-        {
-            session.close();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Session session = sessionFactory.openSession();
+                session.beginTransaction();
+                try
+                {
+                    CriteriaBuilder builder = session.getCriteriaBuilder();
+                    CriteriaQuery<Card> criteria = builder.createQuery(Card.class);
+                    Root<Card> root = criteria.from(Card.class);
+                    criteria.select(root);
+                    Query<Card> query = session.createQuery(criteria);
+                    cardList = query.getResultList();
+                    session.getTransaction().commit();
+                }
+                finally
+                {
+                    session.close();
+                }
+            }
+        }).start();
         return cardList;
     }
 
